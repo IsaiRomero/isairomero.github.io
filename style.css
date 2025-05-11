@@ -1,0 +1,99 @@
+body {
+    font-family: sans-serif;
+    background: #f3f3f3;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  .recibo {
+    margin-top: 20px;
+    background: #e9f7ef;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #c1e2d0;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  /* Estilo para el recibo impreso/PDF */
+#recibo-contenido {
+    max-width: 100%;
+    background: #fff;
+    padding: 30px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    font-family: "Arial", sans-serif;
+  }
+  
+  #recibo-contenido h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+  }
+  
+  #recibo-contenido p {
+    font-size: 16px;
+    margin: 12px 0;
+  }
+  
+  #recibo-contenido p strong {
+    display: inline-block;
+    width: 120px;
+  }
+  
+  #recibo-contenido .firma {
+    margin-top: 40px;
+    text-align: right;
+  }
+  
+  #recibo-contenido .firma p {
+    margin: 5px 0;
+  }
+  

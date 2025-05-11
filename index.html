@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Recibos</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f3f3f3;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #28a745;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .recibo {
+      margin-top: 20px;
+      padding: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #recibo-contenido {
+      width: 300px;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #222;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    #recibo-contenido h2 {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    #recibo-contenido p {
+      margin: 6px 0;
+    }
+
+    .info-local {
+      text-align: center;
+      font-size: 12px;
+      margin-bottom: 10px;
+      border-bottom: 1px dashed #aaa;
+      padding-bottom: 6px;
+    }
+
+    .firma {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .firma p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Centro Óptico de la CDMX (Venta y reparación de equipo)</h1>
+  
+    <!-- Campos del recibo (datos de cliente) -->
+    <div class="form-group">
+      <label>Nombre del Cliente:</label>
+      <input type="text" id="cliente" />
+    </div>
+  
+    <div class="form-group">
+      <label>Producto:</label>
+      <input type="text" id="producto" />
+    </div>
+  
+    <div class="form-group">
+      <label>Cantidad:</label>
+      <input type="number" id="cantidad" />
+    </div>
+
+    <div class="form-group">
+      <label>Monto ($ MXN):</label>
+      <input type="number" id="monto" />
+    </div>
+  
+    <div class="form-group">
+      <label>Fecha:</label>
+      <input type="date" id="fecha" />
+    </div>
+
+    <button onclick="generarRecibo()">Generar Recibo</button>
+
+    <div id="recibo" class="recibo hidden">
+      <div id="recibo-contenido">
+        <div class="info-local">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <div>
+              <strong id="r-local">Centro Óptico de la CDMX (Venta y reparación de equipo)</strong><br>
+              <span id="r-domicilio">06000, Isabel La Católica número 39-2DO PISO, dep 205, Cuauhtémoc, 06000 CDMX</span><br>
+              <span id="r-telefono">Tel: +52 55 2085 9550</span>
+            </div>
+          </div>
+        </div>
+
+        <h2>RECIBO</h2>
+        <p><strong>Cliente:</strong> <span id="r-cliente"></span></p>
+        <p><strong>Producto:</strong> <span id="r-producto"></span></p>
+        <p><strong>Cantidad:</strong> <span id="r-cantidad"></span></p>
+        <p><strong>Monto:</strong> <span id="r-monto"></span></p>
+        <p><strong>Fecha:</strong> <span id="r-fecha"></span></p>
+
+        <div class="firma">
+          <p>___________________</p>
+          <p>Firma</p>
+        </div>
+      </div>
+      <button onclick="descargarImagen()">Descargar Imagen</button>
+    </div>
+  </div>
+
+  <!-- html2canvas para convertir a imagen -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    function generarRecibo() {
+      const cliente = document.getElementById("cliente").value;
+      const producto = document.getElementById("producto").value;
+      const cantidad = document.getElementById("cantidad").value;
+      const monto = document.getElementById("monto").value;
+      const fecha = document.getElementById("fecha").value;
+
+      if (!cliente || !producto || !cantidad || !monto || !fecha) {
+        alert("Por favor completa todos los campos");
+        return;
+      }
+
+      document.getElementById("r-cliente").innerText = cliente;
+      document.getElementById("r-producto").innerText = producto;
+      document.getElementById("r-cantidad").innerText = cantidad;
+      document.getElementById("r-monto").innerText = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(monto);
+      document.getElementById("r-fecha").innerText = fecha;
+
+      document.getElementById("recibo").classList.remove("hidden");
+    }
+
+    function descargarImagen() {
+      const element = document.getElementById("recibo-contenido");
+      html2canvas(element).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "recibo.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
