@@ -33,7 +33,7 @@
       margin-bottom: 5px;
     }
 
-    input {
+    input, textarea {
       width: 100%;
       padding: 6px;
       border-radius: 5px;
@@ -100,28 +100,38 @@
     .firma p {
       margin: 4px 0;
     }
+
+    #r-observaciones {
+      font-size: 14px;
+      display: block;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+
+    #r-observaciones.auto-resize {
+      font-size: clamp(10px, 14px, 14px);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Centro Óptico de la CDMX (Venta y reparación de equipo)</h1>
-  
-    <!-- Campos del recibo (datos de cliente) -->
+
     <div class="form-group">
       <label>Nombre del Cliente:</label>
       <input type="text" id="cliente" />
     </div>
-    
+
     <div class="form-group">
-  <label>Teléfono del Cliente:</label>
-  <input type="text" id="telefonoCliente" />
-</div>
-    
+      <label>Teléfono del Cliente:</label>
+      <input type="text" id="telefonoCliente" />
+    </div>
+
     <div class="form-group">
       <label>Producto:</label>
       <input type="text" id="producto" />
     </div>
-  
+
     <div class="form-group">
       <label>Cantidad:</label>
       <input type="number" id="cantidad" />
@@ -131,15 +141,21 @@
       <label>Monto ($ MXN):</label>
       <input type="number" id="monto" />
     </div>
-  
+
     <div class="form-group">
       <label>Fecha:</label>
       <input type="date" id="fecha" />
     </div>
+
     <div class="form-group">
-  <label>Observaciones:</label>
-  <input type="text" id="observaciones" />
-</div>
+      <label>Garantía:</label>
+      <input type="text" id="garantia" />
+    </div>
+
+    <div class="form-group">
+      <label>Observaciones:</label>
+      <textarea id="observaciones" rows="2"></textarea>
+    </div>
 
     <button onclick="generarRecibo()">Generar Recibo</button>
 
@@ -162,14 +178,13 @@
         <p><strong>Cantidad:</strong> <span id="r-cantidad"></span></p>
         <p><strong>Monto:</strong> <span id="r-monto"></span></p>
         <p><strong>Fecha:</strong> <span id="r-fecha"></span></p>
+        <p><strong>Garantía:</strong> <span id="r-garantia"></span></p>
         <p><strong>Observaciones:</strong> <span id="r-observaciones"></span></p>
-        
       </div>
       <button onclick="descargarImagen()">Descargar Imagen</button>
     </div>
   </div>
 
-  <!-- html2canvas para convertir a imagen -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     function generarRecibo() {
@@ -179,9 +194,10 @@
       const cantidad = document.getElementById("cantidad").value;
       const monto = document.getElementById("monto").value;
       const fecha = document.getElementById("fecha").value;
+      const garantia = document.getElementById("garantia").value;
       const observaciones = document.getElementById("observaciones").value;
 
-      if (!cliente || !producto || !cantidad || !monto || !fecha) {
+      if (!cliente || !telefonoCliente || !producto || !cantidad || !monto || !fecha || !garantia) {
         alert("Por favor completa todos los campos");
         return;
       }
@@ -192,7 +208,15 @@
       document.getElementById("r-cantidad").innerText = cantidad;
       document.getElementById("r-monto").innerText = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(monto);
       document.getElementById("r-fecha").innerText = fecha;
-      document.getElementById("r-observaciones").innerText = observaciones;
+      document.getElementById("r-garantia").innerText = garantia;
+
+      const observacionesSpan = document.getElementById("r-observaciones");
+      observacionesSpan.innerText = observaciones;
+      if (observaciones.length > 60) {
+        observacionesSpan.classList.add("auto-resize");
+      } else {
+        observacionesSpan.classList.remove("auto-resize");
+      }
 
       document.getElementById("recibo").classList.remove("hidden");
     }
