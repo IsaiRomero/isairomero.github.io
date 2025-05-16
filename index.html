@@ -111,7 +111,12 @@
       <label>Nombre del Cliente:</label>
       <input type="text" id="cliente" />
     </div>
-  
+    
+    <div class="form-group">
+  <label>Teléfono del Cliente:</label>
+  <input type="text" id="telefonoCliente" />
+</div>
+    
     <div class="form-group">
       <label>Producto:</label>
       <input type="text" id="producto" />
@@ -131,6 +136,10 @@
       <label>Fecha:</label>
       <input type="date" id="fecha" />
     </div>
+    <div class="form-group">
+  <label>Observaciones:</label>
+  <input type="text" id="observaciones" />
+</div>
 
     <button onclick="generarRecibo()">Generar Recibo</button>
 
@@ -148,10 +157,12 @@
 
         <h2>RECIBO</h2>
         <p><strong>Cliente:</strong> <span id="r-cliente"></span></p>
+        <p><strong>Teléfono:</strong> <span id="r-telefonoCliente"></span></p>
         <p><strong>Producto:</strong> <span id="r-producto"></span></p>
         <p><strong>Cantidad:</strong> <span id="r-cantidad"></span></p>
         <p><strong>Monto:</strong> <span id="r-monto"></span></p>
         <p><strong>Fecha:</strong> <span id="r-fecha"></span></p>
+        <p><strong>Observaciones:</strong> <span id="r-observaciones"></span></p>
         
       </div>
       <button onclick="descargarImagen()">Descargar Imagen</button>
@@ -163,10 +174,12 @@
   <script>
     function generarRecibo() {
       const cliente = document.getElementById("cliente").value;
+      const telefonoCliente = document.getElementById("telefonoCliente").value;
       const producto = document.getElementById("producto").value;
       const cantidad = document.getElementById("cantidad").value;
       const monto = document.getElementById("monto").value;
       const fecha = document.getElementById("fecha").value;
+      const observaciones = document.getElementById("observaciones").value;
 
       if (!cliente || !producto || !cantidad || !monto || !fecha) {
         alert("Por favor completa todos los campos");
@@ -174,10 +187,12 @@
       }
 
       document.getElementById("r-cliente").innerText = cliente;
+      document.getElementById("r-telefonoCliente").innerText = telefonoCliente;
       document.getElementById("r-producto").innerText = producto;
       document.getElementById("r-cantidad").innerText = cantidad;
       document.getElementById("r-monto").innerText = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(monto);
       document.getElementById("r-fecha").innerText = fecha;
+      document.getElementById("r-observaciones").innerText = observaciones;
 
       document.getElementById("recibo").classList.remove("hidden");
     }
